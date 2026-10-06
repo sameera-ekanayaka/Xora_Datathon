@@ -198,3 +198,16 @@ def build_task1_features(stops, outlets, vehicles, allowance, calendar, road, tr
         - feats["vehicle_hist_depart_delay"]
     )
     return feats
+
+
+# Stop columns the models and the simulator need next to the features
+FRAME_COLS = [
+    "delivery_id", "split", "date", "route_id", "window_open_time_min", "window_close_time_min",
+    "planned_depart_time_min", "actual_depart_time_min", "actual_travel_duration_min",
+    "service_min", "late",
+]
+
+
+def model_frame(stops: pd.DataFrame, feats: pd.DataFrame) -> pd.DataFrame:
+    """Features side by side with the keys, plan times and labels."""
+    return pd.concat([stops[FRAME_COLS], feats], axis=1)
