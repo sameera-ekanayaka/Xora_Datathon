@@ -1,0 +1,7 @@
+# Tested on Python 3.11 and 3.14. Later stages will add modelling libraries here.
+numpy==2.4.6
+pandas==3.0.6
+pyarrow==25.0.1
+matplotlib==3.11.2
+jupyterlab==4.6.4
+ipykernel==7.4.0
