@@ -21,7 +21,9 @@ pip install -r requirements.txt
 pip install -e .                   # makes the shared helpers in src/xora importable
 ```
 
-Then unzip the data into `data/raw/` (see `data/README.md`) and run the notebooks in order.
+Then unzip the data into `data/raw/` (see `data/README.md`) and run the notebooks in order, or run `Xora_FinalNotebook.ipynb` on its own, which covers every stage end to end (about an hour, most of it the peak-day optimiser).
+
+![Pipeline](docs/figures/architecture_pipeline.png)
 
 ## Notebook guide
 
@@ -37,7 +39,7 @@ Each notebook does one job and saves its results for the next one, so you can re
 | 06 | `notebooks/06_task2a_demand_forecast.ipynb` | Forecasts daily demand and adds it up into ISO weeks so festival shifts are handled, with backtests and P10 to P90 ranges |
 | 07 | `notebooks/07_task2b_peak_day_allocation.ipynb` | Plans the peak day with an optimiser that follows Waypoint's rules and a fixed order of priorities, prices every deferral, replays the plan on the clock and ranks workshop repairs |
 | 08 | `notebooks/08_decision_layer.ipynb` | Turns the model outputs into plain instructions: a dispatcher risk board, driver run sheets, store messages, peak-day loading sheets and deferral notices, and a weekly reefer outlook |
-| | `Xora_FinalNotebook.ipynb` | The full pipeline in one place, ending with model inference |
+| | `Xora_FinalNotebook.ipynb` | The whole story in one notebook: results at a glance, Parts 2 to 9 covering every stage above, how Waypoint would deploy and monitor it, and a final part that reloads the saved models and reproduces all three submissions |
 
 ## Repo layout
 
