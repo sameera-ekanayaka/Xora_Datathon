@@ -51,7 +51,7 @@ LGB_PARAMS = dict(
 def _fit_lgb(X, y, X_val, y_val, **params):
     """Fit with early stopping on a later time window and return the model."""
     model = lgb.LGBMRegressor(n_estimators=4000, **{**LGB_PARAMS, **params})
-    model.fit(X, y, eval_set=[(X_val, y_val)],
+    model.fit(X, y, eval_X=(X_val,), eval_y=(y_val,),
               callbacks=[lgb.early_stopping(200, verbose=False)])
     return model
 
