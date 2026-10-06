@@ -1,0 +1,62 @@
+feature,group,source,available at 4 PM,why
+brand,Order and vehicle,"orders, outlets, vehicles, allowance table",yes,On the confirmed order and the drafted plan
+depot,Order and vehicle,"orders, outlets, vehicles, allowance table",yes,On the confirmed order and the drafted plan
+district,Order and vehicle,"orders, outlets, vehicles, allowance table",yes,On the confirmed order and the drafted plan
+temp_requirement,Order and vehicle,"orders, outlets, vehicles, allowance table",yes,On the confirmed order and the drafted plan
+dock_type,Order and vehicle,"orders, outlets, vehicles, allowance table",yes,On the confirmed order and the drafted plan
+parking_constraint,Order and vehicle,"orders, outlets, vehicles, allowance table",yes,On the confirmed order and the drafted plan
+vehicle_type,Order and vehicle,"orders, outlets, vehicles, allowance table",yes,On the confirmed order and the drafted plan
+vehicle_temp,Order and vehicle,"orders, outlets, vehicles, allowance table",yes,On the confirmed order and the drafted plan
+outlet_id,Order and vehicle,"orders, outlets, vehicles, allowance table",yes,On the confirmed order and the drafted plan
+order_units,Order and vehicle,"orders, outlets, vehicles, allowance table",yes,On the confirmed order and the drafted plan
+order_weight_kg,Order and vehicle,"orders, outlets, vehicles, allowance table",yes,On the confirmed order and the drafted plan
+order_volume_m3,Order and vehicle,"orders, outlets, vehicles, allowance table",yes,On the confirmed order and the drafted plan
+kg_per_unit,Order and vehicle,"orders, outlets, vehicles, allowance table",yes,On the confirmed order and the drafted plan
+is_chilled,Order and vehicle,"orders, outlets, vehicles, allowance table",yes,On the confirmed order and the drafted plan
+is_mall,Order and vehicle,"orders, outlets, vehicles, allowance table",yes,On the confirmed order and the drafted plan
+was_deferred,Order and vehicle,"orders, outlets, vehicles, allowance table",yes,On the confirmed order and the drafted plan
+vehicle_volume_cap_m3,Order and vehicle,"orders, outlets, vehicles, allowance table",yes,On the confirmed order and the drafted plan
+vehicle_weight_cap_kg,Order and vehicle,"orders, outlets, vehicles, allowance table",yes,On the confirmed order and the drafted plan
+allowance_min,Order and vehicle,"orders, outlets, vehicles, allowance table",yes,On the confirmed order and the drafted plan
+seq,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+is_first_stop,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+route_n_stops,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+stops_after,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+same_outlet_as_previous,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+route_volume_m3,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+route_weight_kg,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+volume_before_m3,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+route_distance_km,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+distance_so_far_km,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+leg_distance_km,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+planned_travel_min,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+planned_travel_so_far_min,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+route_start_min,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+planned_arrival_min,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+planned_hour,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+minutes_into_route,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+window_length_min,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+planned_slack_min,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+planned_early_min,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+min_slack_ahead_min,Route position,drafted route legs,yes,Planned times and distances of the drafted route
+dow,Calendar,calendar,yes,Published calendar
+month,Calendar,calendar,yes,Published calendar
+is_payday,Calendar,calendar,yes,Published calendar
+is_holiday,Calendar,calendar,yes,Published calendar
+monsoon,Calendar,calendar,yes,Published calendar
+festival_ramp,Calendar,calendar,yes,Published calendar
+is_festival_day,Calendar,calendar,yes,Published calendar
+days_to_festival,Calendar,calendar,yes,Published calendar
+trend_days,Calendar,calendar,yes,Published calendar
+disruption_index,Road and traffic,"road conditions, traffic profile",borderline,Treated as a published advisory; models are tested with and without it
+speed_index,Road and traffic,"road conditions, traffic profile",yes,Published advisory and long-run traffic profile
+group_hist_service_mean,History,past finished stops,yes,Only days finished at least 2 days before delivery
+outlet_hist_stops,History,past finished stops,yes,Only days finished at least 2 days before delivery
+outlet_hist_service_mean,History,past finished stops,yes,Only days finished at least 2 days before delivery
+outlet_hist_late_rate,History,past finished stops,yes,Only days finished at least 2 days before delivery
+district_hist_travel_ratio,History,past finished stops,yes,Only days finished at least 2 days before delivery
+vehicle_hist_depart_delay,History,past finished stops,yes,Only days finished at least 2 days before delivery
+load_share_volume,Plan combined with history,features above,yes,Built only from the features above
+load_share_weight,Plan combined with history,features above,yes,Built only from the features above
+expected_travel_min,Plan combined with history,features above,yes,Built only from the features above
+slack_after_history_min,Plan combined with history,features above,yes,Built only from the features above
