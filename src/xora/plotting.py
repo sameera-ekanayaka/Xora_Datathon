@@ -28,6 +28,7 @@ def apply_style() -> None:
         "axes.spines.right": False,
         "axes.grid": True,
         "axes.grid.axis": "y",
+        "axes.axisbelow": True,
         "grid.color": GRID,
         "grid.linewidth": 0.8,
         "xtick.color": INK_SOFT,
