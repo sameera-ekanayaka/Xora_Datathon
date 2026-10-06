@@ -1,0 +1,16 @@
+# Raw data stays local (see data/README.md)
+data/raw/
+data/processed/
+
+# Python and environments
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Notebook and editor clutter
+.ipynb_checkpoints/
+.DS_Store
+.vscode/
+.idea/
