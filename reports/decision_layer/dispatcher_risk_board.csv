@@ -1,0 +1,37 @@
+route,depot,brand,district,stops,red,amber,leaves,worst stop,why,suggested fix,light
+R025904,Peliyagoda,Fresh,Colombo,8,5,0,05:01,stop 7 (OUT011),about 87 min past the cut-off once usual traffic is counted; the plan leaves 13 min before the cut-off,"split the route after stop 3, or move the red stops to the front",red
+R025878,Peliyagoda,Fresh,Kurunegala,4,4,0,02:00,stop 4 (OUT069),"road advisory for Kurunegala (46, 100 = clear); about 16 min past the cut-off once usual traffic is counted",leave earlier: the route is at risk from its first stop,red
+R025895,Peliyagoda,Fresh,Kurunegala,4,4,0,03:34,stop 3 (OUT068),"road advisory for Kurunegala (46, 100 = clear); about 71 min past the cut-off once usual traffic is counted",leave earlier: the route is at risk from its first stop,red
+R025874,Kandy,Fresh,Kandy,6,3,1,05:22,stop 6 (OUT081),"about 46 min past the cut-off once usual traffic is counted; road advisory for Kandy (59, 100 = clear)","split the route after stop 3, or move the red stops to the front",red
+R025886,Peliyagoda,Fresh,Colombo,7,3,0,04:39,stop 7 (OUT014),about 57 min past the cut-off once usual traffic is counted; OUT014 is often slow to receive,"split the route after stop 4, or move the red stops to the front",red
+R025888,Peliyagoda,Fresh,Colombo,3,3,0,06:40,stop 2 (OUT003),about 51 min past the cut-off once usual traffic is counted; planned to arrive after the cut-off,leave earlier: the route is at risk from its first stop,red
+R025900,Kandy,Fresh,Kegalle,4,3,0,05:32,stop 4 (OUT119),about 101 min past the cut-off once usual traffic is counted; the plan leaves 5 min before the cut-off,"split the route after stop 1, or move the red stops to the front",red
+R025901,Peliyagoda,Fresh,Gampaha,5,3,0,05:02,stop 5 (OUT031),"about 17 min past the cut-off once usual traffic is counted; road advisory for Gampaha (61, 100 = clear)","split the route after stop 2, or move the red stops to the front",red
+R025897,Kandy,Fresh,Nuwara Eliya,5,2,1,03:23,stop 5 (OUT107),about 195 min past the cut-off once usual traffic is counted; OUT107 is often slow to receive,"split the route after stop 3, or move the red stops to the front",red
+R025899,Peliyagoda,Fresh,Kalutara,7,2,1,03:43,stop 7 (OUT045),about 86 min past the cut-off once usual traffic is counted; OUT045 is often slow to receive,"split the route after stop 5, or move the red stops to the front",red
+R025903,Kandy,Fresh,Matale,6,2,1,04:55,stop 6 (OUT100),about 72 min past the cut-off once usual traffic is counted; the plan leaves 18 min before the cut-off,"split the route after stop 4, or move the red stops to the front",red
+R025873,Peliyagoda,Fresh,Colombo,2,2,0,06:49,stop 2 (OUT002),about 27 min past the cut-off once usual traffic is counted; the plan leaves 22 min before the cut-off,leave earlier: the route is at risk from its first stop,red
+R025890,Kandy,Fresh,Kandy,2,2,0,07:01,stop 2 (OUT083),"about 36 min past the cut-off once usual traffic is counted; road advisory for Kandy (59, 100 = clear)",leave earlier: the route is at risk from its first stop,red
+R025892,Kandy,Fresh,Badulla,2,2,0,03:27,stop 2 (OUT111),about 225 min past the cut-off once usual traffic is counted; the plan leaves 31 min before the cut-off,leave earlier: the route is at risk from its first stop,red
+R025902,Peliyagoda,Fresh,Gampaha,5,2,0,04:47,stop 5 (OUT033),"road advisory for Gampaha (61, 100 = clear); about 4 min past the cut-off once usual traffic is counted","split the route after stop 3, or move the red stops to the front",red
+R025906,Kandy,Fresh,Kandy,4,2,0,05:33,stop 4 (OUT087),"road advisory for Kandy (59, 100 = clear); only 17 min to spare once usual traffic is counted","split the route after stop 2, or move the red stops to the front",red
+R025876,Peliyagoda,Fresh,Puttalam,2,1,1,03:11,stop 2 (OUT075),about 94 min past the cut-off once usual traffic is counted; OUT075 is often slow to receive,"split the route after stop 1, or move the red stops to the front",red
+R025879,Kandy,Fresh,Nuwara Eliya,4,1,1,03:18,stop 4 (OUT106),about 118 min past the cut-off once usual traffic is counted; OUT106 is often slow to receive,"split the route after stop 3, or move the red stops to the front",red
+R025882,Kandy,Fresh,Kegalle,2,1,1,06:06,stop 2 (OUT118),about 52 min past the cut-off once usual traffic is counted; the plan leaves 20 min before the cut-off,"split the route after stop 1, or move the red stops to the front",red
+R025883,Peliyagoda,Fresh,Gampaha,4,1,1,04:33,stop 4 (OUT033),"road advisory for Gampaha (61, 100 = clear); only 32 min to spare once usual traffic is counted","split the route after stop 3, or move the red stops to the front",red
+R025885,Kandy,Fresh,Matale,6,1,1,04:21,stop 6 (OUT100),about 42 min past the cut-off once usual traffic is counted; planned arrival 07:10,"split the route after stop 5, or move the red stops to the front",red
+R025898,Peliyagoda,Fresh,Galle,6,1,1,03:12,stop 6 (OUT053),about 25 min past the cut-off once usual traffic is counted; OUT053 is often slow to receive,"split the route after stop 5, or move the red stops to the front",red
+R025881,Peliyagoda,Fresh,Kalutara,5,1,0,03:58,stop 5 (OUT045),about 27 min past the cut-off once usual traffic is counted; OUT045 is often slow to receive,"split the route after stop 4, or move the red stops to the front",red
+R025893,Peliyagoda,Fresh,Puttalam,3,1,0,02:00,stop 3 (OUT075),about 83 min past the cut-off once usual traffic is counted; OUT075 is often slow to receive,"split the route after stop 2, or move the red stops to the front",red
+R025896,Peliyagoda,Fresh,Kurunegala,1,1,0,02:35,stop 1 (OUT067),"road advisory for Kurunegala (46, 100 = clear); 132 min into the route",leave earlier: the route is at risk from its first stop,red
+R025875,Kandy,Fresh,Badulla,2,0,1,02:00,stop 2 (OUT110),about 69 min past the cut-off once usual traffic is counted; OUT110 is often slow to receive,amber stops only: driver calls ahead if behind,amber
+R025884,Peliyagoda,Fresh,Gampaha,4,0,1,04:12,stop 4 (OUT029),"road advisory for Gampaha (61, 100 = clear); 112 min into the route",amber stops only: driver calls ahead if behind,amber
+R025887,Kandy,Fresh,Kandy,2,0,1,05:50,stop 2 (OUT087),"road advisory for Kandy (59, 100 = clear); OUT087 is often slow to receive",amber stops only: driver calls ahead if behind,amber
+R025891,Kandy,Fresh,Badulla,2,0,1,02:00,stop 2 (OUT113),about 48 min past the cut-off once usual traffic is counted; OUT113 is often slow to receive,amber stops only: driver calls ahead if behind,amber
+R025877,Peliyagoda,Fresh,Matara,3,0,0,02:25,,,no change,green
+R025880,Peliyagoda,Fresh,Galle,2,0,0,02:36,,,no change,green
+R025889,Kandy,Fresh,Kandy,6,0,0,03:37,,,no change,green
+R025894,Peliyagoda,Fresh,Matara,4,0,0,02:54,,,no change,green
+R025905,Peliyagoda,Fresh,Colombo,3,0,0,03:08,,,no change,green
+R025907,Kandy,Style,Nuwara Eliya,1,0,0,07:30,,,no change,green
+R025908,Peliyagoda,Tech,Galle,1,0,0,07:30,,,no change,green
