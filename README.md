@@ -32,7 +32,7 @@ Each notebook does one job and saves its results for the next one, so you can re
 | 01 | `notebooks/01_data_understanding.ipynb` | Profiles every file and shows what the data says about lateness, demand and the peak day |
 | 02 | `notebooks/02_data_quality_and_cleaning.ipynb` | Checks every table against its expected rules, fixes what needs fixing and saves clean tables |
 | 03 | `notebooks/03_label_construction.ipynb` | Builds the service-time and late labels for Task 1 and the weekly demand table for Task 2A |
-| 04 | `notebooks/04_feature_engineering.ipynb` | Coming next |
+| 04 | `notebooks/04_feature_engineering.ipynb` | Builds the Task 1 features from what a planner knows at the 4 PM cutoff, proves none of them leak, and audits each one |
 | 05 | `notebooks/05_task1_service_and_lateness.ipynb` | Coming next |
 | 06 | `notebooks/06_task2a_demand_forecast.ipynb` | Coming next |
 | 07 | `notebooks/07_task2b_peak_day_allocation.ipynb` | Coming next |
