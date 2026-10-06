@@ -1,0 +1,77 @@
+vehicle_id,trip_id,load_order,stop_no,order_ref,outlet_id,section,order_volume_m3,order_weight_kg,trip_fill,check
+VEH003,1,1,2,S1-035,OUT030,chilled,7.427,1202.9,"21.8 of 26.4 m3, 4040 of 5510 kg",
+VEH003,1,2,1,S1-038,OUT032,chilled,14.41,2836.8,"21.8 of 26.4 m3, 4040 of 5510 kg",
+VEH003,2,1,1,S1-083,OUT074,chilled,8.659,1588.8,"8.7 of 26.4 m3, 1589 of 5510 kg",
+VEH006,1,1,4,S1-012,OUT007,chilled,11.722,1991.0,"32.8 of 33.4 m3, 5643 of 6840 kg",count every case before closing the doors
+VEH006,1,2,3,S1-016,OUT009,chilled,6.944,1241.3,"32.8 of 33.4 m3, 5643 of 6840 kg",count every case before closing the doors
+VEH006,1,3,2,S1-009,OUT005,chilled,10.09,1696.6,"32.8 of 33.4 m3, 5643 of 6840 kg",count every case before closing the doors
+VEH006,1,4,1,S1-014,OUT008,chilled,4.003,713.9,"32.8 of 33.4 m3, 5643 of 6840 kg",count every case before closing the doors
+VEH006,2,1,4,S1-031,OUT028,chilled,6.883,1209.9,"26.2 of 33.4 m3, 4695 of 6840 kg",
+VEH006,2,2,3,S1-033,OUT029,chilled,6.227,1036.8,"26.2 of 33.4 m3, 4695 of 6840 kg",
+VEH006,2,3,2,S1-028,OUT026,chilled,6.368,1190.1,"26.2 of 33.4 m3, 4695 of 6840 kg",
+VEH006,2,4,1,S1-041,OUT034,chilled,6.742,1257.9,"26.2 of 33.4 m3, 4695 of 6840 kg",
+VEH007,1,1,3,S1-048,OUT044,chilled,5.024,907.2,"16.0 of 19.4 m3, 2930 of 3610 kg",
+VEH007,1,2,2,S1-051,OUT046,chilled,5.933,1072.0,"16.0 of 19.4 m3, 2930 of 3610 kg",
+VEH007,1,3,1,S1-046,OUT043,chilled,5.075,951.0,"16.0 of 19.4 m3, 2930 of 3610 kg",
+VEH007,2,1,1,S1-058,OUT054,chilled,16.515,2741.8,"16.5 of 19.4 m3, 2742 of 3610 kg",
+VEH008,1,1,6,S1-039,OUT033,ambient,3.502,610.7,"19.7 of 22.0 m3, 3659 of 3800 kg",count every case before closing the doors
+VEH008,1,2,5,S1-032,OUT029,ambient,3.015,588.5,"19.7 of 22.0 m3, 3659 of 3800 kg",count every case before closing the doors
+VEH008,1,3,4,S1-030,OUT028,ambient,2.831,554.1,"19.7 of 22.0 m3, 3659 of 3800 kg",count every case before closing the doors
+VEH008,1,4,3,S1-027,OUT026,ambient,2.304,420.8,"19.7 of 22.0 m3, 3659 of 3800 kg",count every case before closing the doors
+VEH008,1,5,2,S1-037,OUT032,ambient,4.652,820.7,"19.7 of 22.0 m3, 3659 of 3800 kg",count every case before closing the doors
+VEH008,1,6,1,S1-040,OUT034,ambient,3.378,664.3,"19.7 of 22.0 m3, 3659 of 3800 kg",count every case before closing the doors
+VEH008,2,1,1,S1-069,OUT064,ambient,1.55,477.9,"1.6 of 22.0 m3, 478 of 3800 kg",
+VEH009,1,1,6,S1-052,OUT050,ambient,2.592,524.9,"15.3 of 30.0 m3, 2733 of 5800 kg",
+VEH009,1,2,5,S1-055,OUT053,ambient,0.996,186.0,"15.3 of 30.0 m3, 2733 of 5800 kg",
+VEH009,1,3,4,S1-053,OUT051,ambient,1.375,294.5,"15.3 of 30.0 m3, 2733 of 5800 kg",
+VEH009,1,4,3,S1-059,OUT055,ambient,2.236,401.4,"15.3 of 30.0 m3, 2733 of 5800 kg",
+VEH009,1,5,2,S1-057,OUT054,ambient,4.307,747.3,"15.3 of 30.0 m3, 2733 of 5800 kg",
+VEH009,1,6,1,S1-054,OUT052,ambient,3.791,578.7,"15.3 of 30.0 m3, 2733 of 5800 kg",
+VEH011,1,1,9,S1-019,OUT012,ambient,2.479,464.1,"31.4 of 38.0 m3, 5944 of 7200 kg",
+VEH011,1,2,8,S1-011,OUT007,ambient,5.697,1045.8,"31.4 of 38.0 m3, 5944 of 7200 kg",
+VEH011,1,3,7,S1-006,OUT004,ambient,1.686,305.6,"31.4 of 38.0 m3, 5944 of 7200 kg",
+VEH011,1,4,6,S1-020,OUT013,ambient,6.274,1265.2,"31.4 of 38.0 m3, 5944 of 7200 kg",
+VEH011,1,5,5,S1-017,OUT010,ambient,2.59,414.6,"31.4 of 38.0 m3, 5944 of 7200 kg",
+VEH011,1,6,4,S1-015,OUT009,ambient,1.995,333.7,"31.4 of 38.0 m3, 5944 of 7200 kg",
+VEH011,1,7,3,S1-008,OUT005,ambient,3.631,751.8,"31.4 of 38.0 m3, 5944 of 7200 kg",
+VEH011,1,8,2,S1-018,OUT011,ambient,2.638,564.5,"31.4 of 38.0 m3, 5944 of 7200 kg",
+VEH011,1,9,1,S1-010,OUT006,ambient,4.373,798.7,"31.4 of 38.0 m3, 5944 of 7200 kg",
+VEH013,1,1,4,S1-026,OUT025,ambient,1.473,265.4,"12.9 of 30.0 m3, 2347 of 5800 kg",
+VEH013,1,2,3,S1-036,OUT031,ambient,6.652,1160.0,"12.9 of 30.0 m3, 2347 of 5800 kg",
+VEH013,1,3,2,S1-034,OUT030,ambient,2.759,545.4,"12.9 of 30.0 m3, 2347 of 5800 kg",
+VEH013,1,4,1,S1-029,OUT027,ambient,1.994,376.0,"12.9 of 30.0 m3, 2347 of 5800 kg",
+VEH014,1,1,3,S1-025,OUT024,ambient,4.653,1566.3,"12.8 of 38.0 m3, 4158 of 7200 kg",
+VEH014,1,2,2,S1-024,OUT023,ambient,2.741,896.0,"12.8 of 38.0 m3, 4158 of 7200 kg",
+VEH014,1,3,1,S1-023,OUT022,ambient,5.39,1695.8,"12.8 of 38.0 m3, 4158 of 7200 kg",
+VEH015,1,1,7,S1-049,OUT045,ambient,1.914,333.1,"17.9 of 22.0 m3, 3320 of 3800 kg",
+VEH015,1,2,6,S1-047,OUT044,ambient,2.218,419.5,"17.9 of 22.0 m3, 3320 of 3800 kg",
+VEH015,1,3,5,S1-044,OUT042,ambient,5.225,1020.6,"17.9 of 22.0 m3, 3320 of 3800 kg",
+VEH015,1,4,4,S1-042,OUT040,ambient,3.427,618.1,"17.9 of 22.0 m3, 3320 of 3800 kg",
+VEH015,1,5,3,S1-050,OUT046,ambient,1.631,286.6,"17.9 of 22.0 m3, 3320 of 3800 kg",
+VEH015,1,6,2,S1-045,OUT043,ambient,1.332,225.5,"17.9 of 22.0 m3, 3320 of 3800 kg",
+VEH015,1,7,1,S1-043,OUT041,ambient,2.13,416.4,"17.9 of 22.0 m3, 3320 of 3800 kg",
+VEH017,1,1,1,S1-080,OUT072,ambient,3.72,1006.3,"3.7 of 22.0 m3, 1006 of 3800 kg",
+VEH019,1,1,4,S1-077,OUT069,ambient,2.482,504.2,"9.5 of 38.0 m3, 1869 of 7200 kg",
+VEH019,1,2,3,S1-070,OUT065,ambient,2.598,505.3,"9.5 of 38.0 m3, 1869 of 7200 kg",
+VEH019,1,3,2,S1-076,OUT068,ambient,2.032,426.1,"9.5 of 38.0 m3, 1869 of 7200 kg",
+VEH019,1,4,1,S1-074,OUT067,ambient,2.349,433.8,"9.5 of 38.0 m3, 1869 of 7200 kg",
+VEH023,1,1,1,S1-068,OUT063,ambient,7.494,469.2,"7.5 of 38.0 m3, 469 of 7200 kg",
+VEH028,1,1,1,S1-072,OUT066,ambient,2.095,382.5,"2.1 of 24.0 m3, 382 of 4200 kg",
+VEH028,2,1,2,S1-061,OUT057,ambient,11.822,799.0,"19.7 of 24.0 m3, 1316 of 4200 kg",
+VEH028,2,2,1,S1-060,OUT056,ambient,7.858,516.7,"19.7 of 24.0 m3, 1316 of 4200 kg",
+VEH029,1,1,4,S1-066,OUT062,ambient,3.425,678.1,"11.3 of 30.0 m3, 2165 of 5800 kg",
+VEH029,1,2,3,S1-063,OUT060,ambient,2.3,464.4,"11.3 of 30.0 m3, 2165 of 5800 kg",
+VEH029,1,3,2,S1-062,OUT059,ambient,3.388,561.5,"11.3 of 30.0 m3, 2165 of 5800 kg",
+VEH029,1,4,1,S1-065,OUT061,ambient,2.23,461.0,"11.3 of 30.0 m3, 2165 of 5800 kg",
+VEH032,1,1,3,S1-082,OUT074,ambient,2.618,532.1,"6.9 of 24.0 m3, 1271 of 4200 kg",
+VEH032,1,2,2,S1-084,OUT075,ambient,1.859,336.9,"6.9 of 24.0 m3, 1271 of 4200 kg",
+VEH032,1,3,1,S1-081,OUT073,ambient,2.38,402.3,"6.9 of 24.0 m3, 1271 of 4200 kg",
+VEH032,2,1,1,S1-079,OUT071,ambient,9.379,531.8,"9.4 of 24.0 m3, 532 of 4200 kg",
+VEH036,1,1,2,S1-007,OUT004,chilled,2.925,567.7,"5.4 of 7.0 m3, 1016 of 1040 kg",count every case before closing the doors
+VEH036,1,2,1,S1-001,OUT001,chilled,2.445,448.6,"5.4 of 7.0 m3, 1016 of 1040 kg",count every case before closing the doors
+VEH036,2,1,1,S1-067,OUT062,chilled,5.194,930.2,"5.2 of 7.0 m3, 930 of 1040 kg",
+VEH038,1,1,5,S1-022,OUT014,ambient,1.899,357.2,"6.1 of 9.0 m3, 1148 of 1200 kg",count every case before closing the doors
+VEH038,1,2,4,S1-002,OUT002,ambient,0.666,130.9,"6.1 of 9.0 m3, 1148 of 1200 kg",count every case before closing the doors
+VEH038,1,3,3,S1-013,OUT008,ambient,2.18,401.2,"6.1 of 9.0 m3, 1148 of 1200 kg",count every case before closing the doors
+VEH038,1,4,2,S1-004,OUT003,ambient,0.87,160.6,"6.1 of 9.0 m3, 1148 of 1200 kg",count every case before closing the doors
+VEH038,1,5,1,S1-000,OUT001,ambient,0.5,97.8,"6.1 of 9.0 m3, 1148 of 1200 kg",count every case before closing the doors
