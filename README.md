@@ -35,7 +35,7 @@ Each notebook does one job and saves its results for the next one, so you can re
 | 04 | `notebooks/04_feature_engineering.ipynb` | Builds the Task 1 features from what a planner knows at the 4 PM cutoff, proves none of them leak, and audits each one |
 | 05 | `notebooks/05_task1_service_and_lateness.ipynb` | Predicts service time and late risk by simulating each drafted route, compares it with a direct classifier, and writes the Task 1 predictions |
 | 06 | `notebooks/06_task2a_demand_forecast.ipynb` | Forecasts daily demand and adds it up into ISO weeks so festival shifts are handled, with backtests and P10 to P90 ranges |
-| 07 | `notebooks/07_task2b_peak_day_allocation.ipynb` | Coming next |
+| 07 | `notebooks/07_task2b_peak_day_allocation.ipynb` | Plans the peak day with an optimiser that follows Waypoint's rules and a fixed order of priorities, prices every deferral, replays the plan on the clock and ranks workshop repairs |
 | 08 | `notebooks/08_decision_layer.ipynb` | Coming next |
 | | `Xora_FinalNotebook.ipynb` | The full pipeline in one place, ending with model inference |
 
