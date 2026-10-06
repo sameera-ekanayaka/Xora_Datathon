@@ -1,0 +1,10 @@
+order,outlet,goods,m3,days since served,why,tomorrow
+S1-021,OUT013,Fresh chilled,9.9,1,reefers full: serving it instead costs 0.2 m3 of other chilled goods,priority 1
+S1-056,OUT053,Fresh chilled,3.8,2,reefers full: serving it instead costs 0.5 m3 of other chilled goods,priority 1
+S1-071,OUT065,Fresh chilled,12.0,1,reefers full: serving it instead costs 1.0 m3 of other chilled goods,priority 1
+S1-073,OUT066,Fresh chilled,5.8,1,reefers full: serving it instead costs 1.0 m3 of other chilled goods,priority 1
+S1-075,OUT067,Fresh chilled,7.2,2,reefers full: serving it instead costs 1.0 m3 of other chilled goods,priority 1
+S1-003,OUT002,Fresh chilled,1.8,1,"reefers full: serving it instead costs 1.6 m3 of other chilled goods, though it would reach 1 more store",priority 1
+S1-005,OUT003,Fresh chilled,1.7,2,"reefers full: serving it instead costs 1.6 m3 of other chilled goods, though it would reach 1 more store",priority 1
+S1-064,OUT060,Fresh chilled,6.8,1,reefers full: serving it instead costs 8.9 m3 of other chilled goods,priority 1
+S1-078,OUT070,Style ambient,40.7,2,unavoidable: 40.7 m3 is bigger than the largest truck (38 m3); ask the store to split it,priority 1

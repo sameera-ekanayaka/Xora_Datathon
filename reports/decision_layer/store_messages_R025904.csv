@@ -1,0 +1,9 @@
+outlet,light,message
+OUT008,green,"Your Fresh delivery arrives 06:00 to 06:15, usually on time."
+OUT010,green,"Your Fresh delivery arrives 06:25 to 06:45, usually on time."
+OUT013,green,"Your Fresh delivery arrives 07:15 to 07:40, usually on time."
+OUT005,red,"Your Fresh delivery is planned for 08:00 to 08:30. It may arrive after your 07:45 cut-off, so the driver will call you on the way. Please keep the receiving bay free."
+OUT006,red,"Your Fresh delivery is planned for 08:50 to 09:25. It may arrive after your 08:00 cut-off, so the driver will call you on the way. Please keep the receiving bay free."
+OUT007,red,"Your Fresh delivery is planned for 09:40 to 10:20. It may arrive after your 08:00 cut-off, so the driver will call you on the way. Please keep the receiving bay free."
+OUT011,red,"Your Fresh delivery is planned for 10:35 to 11:20. It may arrive after your 08:00 cut-off, so the driver will call you on the way. Please keep the receiving bay free."
+OUT012,red,"Your Fresh delivery is planned for 11:25 to 12:15. It may arrive after your 08:00 cut-off, so the driver will call you on the way. Please keep the receiving bay free."
