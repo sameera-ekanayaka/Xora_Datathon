@@ -1,0 +1,9 @@
+stop,outlet,window,planned,likely arrival,unloading,light,note
+1,OUT008,05:00 to 07:30,05:26,06:00 to 06:15,about 10 min,green,
+2,OUT010,05:00 to 07:30,05:48,06:25 to 06:45,about 20 min,green,
+3,OUT013,05:00 to 07:30,06:12,07:15 to 07:40,about 15 min,green,
+4,OUT005,04:00 to 07:45,06:36,08:00 to 08:30,about 20 min,red,likely late: call the store before you set off for it
+5,OUT006,03:00 to 08:00,06:59,08:50 to 09:25,about 25 min,red,likely late: call the store before you set off for it
+6,OUT007,05:30 to 08:00,07:23,09:40 to 10:20,about 30 min,red,likely late: call the store before you set off for it
+7,OUT011,03:00 to 08:00,07:47,10:35 to 11:20,about 25 min,red,likely late: call the store before you set off for it
+8,OUT012,05:30 to 08:00,08:10,11:25 to 12:15,about 20 min,red,likely late: call the store before you set off for it
