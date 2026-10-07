@@ -21,7 +21,7 @@ with c[0]:
         "ours": [t1["holdout"]["service"]["MAE"], t1["holdout"]["service"]["RMSE"], t1["holdout"]["late"]["log loss"],
                  t1["holdout"]["late"]["Brier"], t1["holdout"]["late"]["AUC"]],
         "today": [t1["holdout"]["allowance_table_MAE"], None, 0.287, None, 0.86],
-    }).round(3), hide_index=True, use_container_width=True)
+    }).round(3), hide_index=True, width="stretch")
     st.caption(f"Trained on {t1['trained_on']}. {t1['simulation_runs']:,} simulated runs per route, seed {t1['seed']}. "
                f"Late risk: {t1['late_risk']}.")
 with c[1]:
@@ -31,7 +31,7 @@ with c[1]:
         "measure": ["weekly error (WAPE)", "error vs same week last year", "bias"],
         "total": [f"{b['total']['WAPE']:.1%}", f"{b['total']['vs last year']:.0%}", f"{b['total']['bias']:+.1%}"],
         "chilled": [f"{b['chilled']['WAPE']:.1%}", f"{b['chilled']['vs last year']:.0%}", f"{b['chilled']['bias']:+.1%}"],
-    }), hide_index=True, use_container_width=True)
+    }), hide_index=True, width="stretch")
     st.caption(f"{t2['method'].capitalize()}. Trained on {t2['trained_on']}; P10 to P90 ranges cover "
                f"{t2['interval_coverage_leave_one_out']:.0%} of backtest weeks.")
 
@@ -50,7 +50,7 @@ if st.button("Run Task 1 inference", type="primary"):
     k[0].metric("Stops scored", f"{len(out):,}", f"in {time.time() - start:.1f} s", delta_color="off")
     k[1].metric("Largest service difference", f"{np.abs(out.pred_service_min.to_numpy() - sub.pred_service_min.to_numpy()).max():.3f} min")
     k[2].metric("Largest late-risk difference", f"{np.abs(out.pred_late_prob.to_numpy() - sub.pred_late_prob.to_numpy()).max():.4f}")
-    st.dataframe(out.head(10), hide_index=True, use_container_width=True)
+    st.dataframe(out.head(10), hide_index=True, width="stretch")
 
 st.markdown("#### Task 2B feasibility")
 st.code("python check_allocation.py submissions/submission_task2b.csv\nFEASIBILITY: PASSED - every rule satisfied.", language="text")

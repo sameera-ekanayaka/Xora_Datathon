@@ -40,7 +40,7 @@ for w in g.dropna(subset=["festival"]).itertuples():
     fig.add_annotation(x=w.week, y=w.p90, text=w.festival.replace("_", " "), showarrow=False, yshift=14,
                        font=dict(size=12, color=SOFT))
 fig.update_layout(title=dict(text=f"{depot} {brand}, {measure} volume per ISO week (m3)", x=0, font=dict(size=16)))
-st.plotly_chart(plotly_layout(fig, 430), use_container_width=True)
+st.plotly_chart(plotly_layout(fig, 430), width="stretch")
 
 st.markdown("#### Reefer outlook: when to book maintenance")
 st.caption("Chilled volume per operating day against the depot's own busiest days so far. "
@@ -56,7 +56,7 @@ show = pd.DataFrame({
 which = st.radio("Show", ["Both depots", "Kandy", "Peliyagoda"], horizontal=True, label_visibility="collapsed")
 if which != "Both depots":
     show = show[show.depot == which]
-st.dataframe(paint(show), hide_index=True, use_container_width=True)
+st.dataframe(paint(show), hide_index=True, width="stretch")
 
 b = manifest()["task2a"]["backtest_blend"]
 st.caption(f"Backtests over six 10-week windows: weekly error {b['total']['WAPE']:.1%} on total and {b['chilled']['WAPE']:.1%} on chilled, "

@@ -38,5 +38,5 @@ for col, (who, what, link, label) in zip(cols, roles):
 
 st.write("")
 st.markdown("#### How it fits together")
-st.image(str(ROOT / "docs" / "figures" / "architecture_pipeline.png"), use_container_width=True)
+st.image(str(ROOT / "docs" / "figures" / "architecture_pipeline.png"), width="stretch")
 st.caption("Full workings, from raw files to these outputs, are in `Xora_FinalNotebook.ipynb`.")

@@ -33,16 +33,16 @@ with tab[0]:
                            hovertemplate="%{y}: %{x:.0f}% full<extra></extra>"))
     fig.update_xaxes(title="volume used (%)", range=[0, 105])
     fig.update_layout(title=dict(text="How full each trip is (blue: reefer, green: ambient)", x=0, font=dict(size=16)))
-    st.plotly_chart(plotly_layout(fig, max(320, 22 * len(t))), use_container_width=True)
+    st.plotly_chart(plotly_layout(fig, max(320, 22 * len(t))), width="stretch")
     st.dataframe(pd.DataFrame({
         "vehicle": t.vehicle_id, "trip": t.trip_id, "kind": t.temp + " " + t.type, "brand": t.brand, "district": t.district,
         "orders": t.orders, "m3": [f"{a:.1f} of {b:.1f}" for a, b in zip(t.volume_m3, t.volume_cap_m3)],
         "kg": [f"{a:,.0f} of {b:,.0f}" for a, b in zip(t.weight_kg, t.weight_cap_kg)],
-        "planned min": t.planned_min, "km": t.km.round(0).astype(int)}), hide_index=True, use_container_width=True)
+        "planned min": t.planned_min, "km": t.km.round(0).astype(int)}), hide_index=True, width="stretch")
 
 with tab[1]:
     st.caption("Every deferral has a reason code and a price: what serving it instead would cost other stores.")
-    st.dataframe(load("peak_day_deferral_list"), hide_index=True, use_container_width=True)
+    st.dataframe(load("peak_day_deferral_list"), hide_index=True, width="stretch")
     st.markdown("**Notices to the stores**")
     for x in load("peak_day_store_notices").itertuples():
         st.markdown(f'<div class="msg"><b>{x.outlet}</b><br>{x.message}</div>', unsafe_allow_html=True)
@@ -54,11 +54,11 @@ with tab[2]:
     v, t = pick.split(" trip ")
     one = s[(s.vehicle_id == v) & (s.trip_id == int(t))].sort_values("load_order")
     st.caption(f"Load in this order: the last stop goes in first, so the first stop is at the doors. Trip fill: {one.trip_fill.iloc[0]}.")
-    st.dataframe(one.drop(columns=["vehicle_id", "trip_id", "trip_fill"]), hide_index=True, use_container_width=True)
+    st.dataframe(one.drop(columns=["vehicle_id", "trip_id", "trip_fill"]), hide_index=True, width="stretch")
 
 with tab[3]:
     st.caption("Replayed on the clock, these second pre-dawn reefer runs reach stores after opening. The stores hear about it the evening before.")
-    st.dataframe(load("peak_day_late_warnings"), hide_index=True, use_container_width=True)
+    st.dataframe(load("peak_day_late_warnings"), hide_index=True, width="stretch")
 
 with tab[4]:
     if (DATA / "workshop_repairs.csv").exists():
@@ -68,7 +68,7 @@ with tab[4]:
                                textposition="outside", textfont=dict(color=SOFT)))
         fig.update_xaxes(title="extra chilled volume served if this reefer is back for the morning (m3)", range=[0, rep.extra_chilled_m3.max() * 1.3])
         fig.update_layout(title=dict(text="Which reefer should the workshop release first?", x=0, font=dict(size=16)))
-        st.plotly_chart(plotly_layout(fig, 340), use_container_width=True)
+        st.plotly_chart(plotly_layout(fig, 340), width="stretch")
         st.caption("Each bar is a full re-solve with that vehicle added back. A large reefer truck recovers most of the chilled deferrals; "
                    "the reefer van recovers less volume but is the only way to reach van-only outlets with chilled goods.")
     else:

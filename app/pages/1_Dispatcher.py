@@ -47,7 +47,7 @@ board["light"] = np.where(board.red > 0, "red", np.where(board.amber > 0, "amber
 board = board.sort_values(["red", "amber"], ascending=False).reset_index(drop=True)
 
 st.markdown("#### Routes, riskiest first")
-st.dataframe(paint(board), hide_index=True, use_container_width=True, height=300,
+st.dataframe(paint(board), hide_index=True, width="stretch", height=300,
              column_order=["light", "route", "brand", "district", "leaves", "stops", "red", "amber", "worst stop", "why", "suggested fix"])
 
 st.markdown("#### Route detail")
@@ -66,7 +66,7 @@ with left:
         "late risk": (r.pred_late_prob * 100).round(0).astype(int).astype(str) + "%",
         "light": r.light, "why": r.reason,
     })
-    st.dataframe(paint(sheet), hide_index=True, use_container_width=True)
+    st.dataframe(paint(sheet), hide_index=True, width="stretch")
     st.markdown(f"**Suggested fix:** {dl.route_fix(r)}")
 with right:
     st.markdown("**Messages to stores, sent the evening before**")
@@ -109,4 +109,4 @@ lo = min(new.arrival_p50_min.min(), r.window_open_time_min.min()) - 20
 hi = max(new.arrival_p90_min.max(), base.arrival_p50_min.max(), r.window_close_time_min.max()) + 20
 ticks = list(range(int(lo // 30 * 30), int(hi) + 30, 30))
 fig.update_yaxes(tickvals=ticks, ticktext=[clock(t) for t in ticks], range=[lo, hi], title=None)
-st.plotly_chart(plotly_layout(fig, 400), use_container_width=True)
+st.plotly_chart(plotly_layout(fig, 400), width="stretch")
