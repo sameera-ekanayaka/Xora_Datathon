@@ -1,0 +1,6 @@
+vehicle_id,type,m3,extra_chilled_m3,extra_outlets
+VEH004,truck,33.4,35.3,5
+VEH005,truck,33.4,35.3,5
+VEH001,truck,26.4,34.8,5
+VEH002,truck,21.1,33.3,5
+VEH035,van,7.0,9.6,2
