@@ -20,8 +20,8 @@ with c[0]:
         "measure": ["service time MAE (min)", "service time RMSE (min)", "late risk log loss", "late risk Brier", "late risk AUC"],
         "ours": [t1["holdout"]["service"]["MAE"], t1["holdout"]["service"]["RMSE"], t1["holdout"]["late"]["log loss"],
                  t1["holdout"]["late"]["Brier"], t1["holdout"]["late"]["AUC"]],
-        "today": [t1["holdout"]["allowance_table_MAE"], None, 0.287, None, 0.86],
-    }).round(3), hide_index=True, width="stretch")
+        "today's rule": [t1["holdout"]["allowance_table_MAE"], None, 0.287, None, 0.86],
+    }).map(lambda v: "" if v is None or v != v else (f"{v:.3f}" if isinstance(v, float) else v)), hide_index=True, width="stretch")
     st.caption(f"Trained on {t1['trained_on']}. {t1['simulation_runs']:,} simulated runs per route, seed {t1['seed']}. "
                f"Late risk: {t1['late_risk']}.")
 with c[1]:

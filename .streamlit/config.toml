@@ -6,6 +6,9 @@ secondaryBackgroundColor = "#ffffff"
 textColor = "#141413"
 font = "sans serif"
 
+[client]
+toolbarMode = "viewer"
+
 [server]
 headless = true
 
