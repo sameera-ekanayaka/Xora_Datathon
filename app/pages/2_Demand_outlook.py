@@ -45,7 +45,7 @@ st.plotly_chart(plotly_layout(fig, 430), width="stretch")
 st.markdown("#### Reefer outlook: when to book maintenance")
 st.caption("Chilled volume per operating day against the depot's own busiest days so far. "
            "Red weeks are busier than 95% of the days the depot has ever run.")
-o = load("reefer_outlook")
+o = load("reefer_outlook").sort_values(["iso_week", "depot"])
 show = pd.DataFrame({
     "light": o.status, "depot": o.depot, "week": o.iso_week, "operating days": o.operating_days,
     "chilled m3 a day": [f"{a:.0f} to {b:.0f}" for a, b in zip(o.m3_per_day_p50, o.m3_per_day_p90)],
