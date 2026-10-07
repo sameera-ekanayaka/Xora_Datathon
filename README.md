@@ -25,6 +25,23 @@ Then unzip the data into `data/raw/` (see `data/README.md`) and run the notebook
 
 ![Pipeline](docs/figures/architecture_pipeline.png)
 
+## Planning app
+
+`app/` is a small Streamlit app that puts the outputs in front of the people who would use them: a dispatcher risk board with a live "leave earlier" what-if, the 10-week demand outlook with the reefer calendar, the peak-day plan with loading sheets and the workshop repair ranking, and a page that reruns the saved Task 1 models.
+
+```bash
+streamlit run app/Home.py
+```
+
+The app reads only the small derived tables in `app/data/` and the saved models, so it runs without the raw data. To rebuild those tables after rerunning the notebooks:
+
+```bash
+python app/build_app_data.py
+python app/build_app_data.py --repairs    # also re-solves the peak day once per workshop reefer (about 25 minutes)
+```
+
+To host it on Streamlit Community Cloud, create an app from this repo with `app/Home.py` as the main file. It installs from `requirements.txt` and picks up the theme in `.streamlit/config.toml`.
+
 ## Notebook guide
 
 Each notebook does one job and saves its results for the next one, so you can read them in order like chapters.
@@ -49,6 +66,7 @@ data/                 local only: raw data and processed tables
 notebooks/            one notebook per stage, numbered in reading order
 src/xora/             small shared helpers (paths, loading, time parsing, data checks)
 models/               saved model files
+app/                  Streamlit planning app and the small tables it reads
 submissions/          the three submission CSVs
 docs/                 diagrams, preprocessing document, Task 2B policy, model cards
 reports/              figures and the experiment log
