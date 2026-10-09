@@ -36,9 +36,9 @@ Per the booklet standard ($\text{trip minutes} = \text{outbound} + \text{inter-s
 ## Unavoidable and elective deferrals
 
 Comparing the scenario files against `task2b_peak_day_fleet.csv` and `vehicles.csv`, Peliyagoda has **ten vehicles in the workshop** (5 ambient trucks, 4 reefer trucks, 1 reefer van; 28 available).
-- **Unavoidable:** an order no available vehicle can carry. In S1 that is S1-078 (Style, OUT070, 40.7 m³), bigger than the largest truck (38 m³). The commercial remedy is to split the order.
-- **Capacity-forced:** with **four of seven reefer trucks** in the workshop (VEH001, VEH002, VEH004, VEH005) plus one reefer van (VEH035), over 55% of Peliyagoda's refrigerated fleet is offline. Only 4 reefers are available (86.2 m³ single-trip capacity). No valid plan can serve more than 132.8 m³ of the 181.6 m³ chilled demand; about 49 m³ must wait. The optimiser proves this.
-- **Elective:** which chilled orders wait is a choice. We choose the set that reaches the most stores (132.6 m³ to 18 stores instead of 132.8 m³ to 17 stores, giving up 0.2 m³ to serve an extra store). Each deferred order carries a price: what serving it instead would cost other stores.
+- **Unavoidable:** S1-078 (Style, OUT070, 40.7 m³) is bigger than the largest truck (38 m³). The commercial fix is to split the order.
+- **Capacity-forced:** With **four of seven reefer trucks** in the workshop (plus one reefer van), over 55% of refrigerated capacity is offline. Only 4 reefers are available (86.2 m³ single-trip capacity). No valid plan can serve more than 132.8 m³ of the 181.6 m³ chilled demand; about 49 m³ must wait. The optimiser proves this.
+- **Elective:** Which chilled orders wait is a choice. We serve 132.6 m³ to 18 stores instead of 132.8 m³ to 17 stores, giving up 0.2 m³ to reach an extra store. Each deferred order carries a price: what serving it instead would cost other stores (see Appendix B).
 
 ## Result for S1
 
@@ -46,10 +46,10 @@ Comparing the scenario files against `task2b_peak_day_fleet.csv` and `vehicles.c
 
 ## Cost and impact trade-offs
 
-- **Volume against stores:** Giving up 0.25 m³ of chilled volume reaches one more store. Each elective deferral is priced: most swaps cost under 1 m³, the Matara order about 9 m³, and serving a `van_only` Colombo store would cost 1.6 m³, more than the policy allows.
-- **The planning standard against the clock:** The standard leaves out the drive back between trips and store opening times. Replayed on the clock, five chilled stops on second pre-dawn reefer trips reach stores after opening (eleven stops on a typical day of traffic). Those stores are warned the evening before, and drivers get clock times, not planning minutes.
-- **Workshop repairs:** One large reefer truck back for the morning recovers about 35 m³ of chilled goods and five stores; the reefer van recovers about 10 m³ and is the only way to bring chilled goods to `van_only` outlets. On a peak day the workshop should release a large reefer truck first.
-- **Tomorrow:** Every order deferred today becomes a priority 1 order tomorrow, so no store goes two days without its goods.
+- **Stores vs volume:** Sacrificing 0.25 m³ chilled volume reaches one more store.
+- **Clock replay:** Accounting for depot reloads and store opening times, 5 chilled stops on second trips arrive after opening. Stores receive early warnings, and drivers receive clock schedules.
+- **Workshop priority:** Releasing one large reefer truck recovers ~35 m³ and 5 stores; the reefer van recovers 10 m³ and unlocks van-only chilled stores.
+- **Tomorrow:** Every deferred order becomes Priority 1 tomorrow, preventing consecutive misses.
 
 ---
 
