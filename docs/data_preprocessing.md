@@ -6,10 +6,10 @@ This document details the data preparation, data cleaning, label construction, f
 
 ## 1. Overview & Data Ingestion
 
-The solution ingests synthetic operational data from 9 core files across two depots (Peliyagoda and Kandy), serving 120 retail outlets with 60 vehicles across three brands (**Fresh**, **Style**, and **Tech**):
+The solution ingests synthetic operational data from 11 core files across two depots (Peliyagoda and Kandy), serving 120 retail outlets with 60 vehicles across three brands (**Fresh**, **Style**, and **Tech**):
 
-- **Order Records:** `deliveries_train.csv` (97,321 historical orders) and `task1_test_inputs.csv` (5,014 test orders).
-- **Route Execution Legs:** `route_legs_train.csv` (96,908 legs) and `route_legs_test.csv` (5,014 planned legs).
+- **Order Records:** `deliveries_train.csv` (92,307 historical training orders) and `task1_test_inputs.csv` (5,014 test orders; 97,321 orders total).
+- **Route Execution Legs:** `route_legs_train.csv` (91,894 training legs) and `route_legs_test.csv` (5,014 planned legs; 96,908 legs total).
 - **Network Reference:** `outlets.csv` (120 outlets), `vehicles.csv` (60 vehicles), `district_travel.csv` (12 districts), `service_allowance.csv` (9 brand/dock combinations).
 - **Operating Context:** `calendar.csv` (910 operating/calendar days), `traffic_speed.csv` (congestion by district and hour), `road_conditions.csv` (disruption index).
 
@@ -30,7 +30,7 @@ The data cleaning pipeline (`notebooks/02_data_quality_and_cleaning.ipynb`) appl
 - **Operating Days:** Confirmed that day-of-week (`dow`) is strictly between 0 (Monday) and 5 (Saturday), as Waypoint does not operate Sunday deliveries.
 
 ### Missing Values and Blank Handling
-- **Route Attributes for `not_run` Orders:** Out of 97,321 training orders, exactly 413 have `dispatch_status == 'not_run'`. These orders have null route and execution fields because they were never dispatched due to depot capacity shortages.
+- **Route Attributes for `not_run` Orders:** Out of 92,307 training orders, exactly 413 have `dispatch_status == 'not_run'`. These orders have null route and execution fields because they were never dispatched due to depot capacity shortages.
   - *Treatment:* They are retained in the master order table to ensure full demand accounting for Task 2A (where every customer order represents genuine demand), but excluded from Task 1 route service and lateness modeling.
 - **Zero Inconsistencies:** No missing values exist in network reference tables or test inputs.
 
@@ -97,7 +97,7 @@ All production models are serialized in `models/` alongside configuration metada
 
 ### Model 1: Task 1 Service Time Regressor
 - **Architecture:** LightGBM Gradient Boosted Regressor (`models/route_simulator.pkl` regression component).
-- **Objective:** Mean Absolute Error minimization (`L1` objective).
+- **Objective:** Mean (L2), chosen after comparing median, mean, and Huber loss objectives.
 - **Inputs:** 61 cutoff-time features.
 - **Holdout Performance:**
   - **MAE:** **3.92 minutes** (compared to the baseline published allowance table MAE of **7.09 minutes** — a **45% error reduction**).
@@ -115,12 +115,12 @@ All production models are serialized in `models/` alongside configuration metada
 
 ### Model 3: Task 2A Weekly Depot Demand Forecaster
 - **Architecture:** Daily forecasting aggregated into ISO calendar weeks:
-  1. **Harmonic Calendar Regressor:** Linear Ridge/ElasticNet with Fourier seasonal harmonics and holiday step indicators (`models/demand_regression.pkl`).
-  2. **Calendar LightGBM Regressor:** Non-linear tree model with festival proximity ramp features (`models/demand_calendar_gbm.pkl`).
-- **Methodology:** Daily volume is predicted per depot and brand, then summed by `iso_year` and `iso_week` to ensure moveable holidays (such as Vesak moving between ISO weeks 18, 20, and 21) are placed accurately without artificial week-matching errors.
+  1. **Trend Regression:** Per-series ridge regression on log volume with growth trend (`t_years`), day-of-week and month indicators, and calendar flags (`festival_ramp`, `is_payday`, `is_holiday`, `monsoon`, `pre_festival`, `post_festival`) fitted on operating days (`models/demand_regression.pkl`).
+  2. **Calendar LightGBM Regressor:** One LightGBM across all series that learns non-linear calendar effects and festival timing on top of the regression growth trend (`models/demand_calendar_gbm.pkl`).
+- **Methodology:** Daily volume is predicted per depot, brand, and temperature measure, then summed by `iso_year` and `iso_week` to ensure moveable holidays (such as Vesak moving between ISO weeks 18, 20, and 21) are placed accurately without artificial week-matching errors.
 - **Backtest Validation (6 Rolling Origins across 2025–2026):**
-  - **Total Volume WAPE:** **5.16%** (**41% lower error** than same-week-last-year baseline of 12.6%).
-  - **Chilled Volume WAPE:** **3.62%** (**54% lower error** than last year's baseline of 7.8%).
+  - **Total Volume WAPE:** **5.16%** (**41% lower error** than a baseline of about 8.7% based on same week last year; ratio vs last year is 0.591).
+  - **Chilled Volume WAPE:** **3.62%** (**54% lower error** than last year's baseline of 7.8%; ratio vs last year is 0.463).
   - **P10–P90 Prediction Interval Coverage:** 76.5% on leave-one-out testing.
 
 ### Model 4: Task 2B Peak-Day Fleet Allocator
