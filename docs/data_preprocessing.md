@@ -1,0 +1,135 @@
+# Data Preprocessing and Model Cards
+
+This document details the data preparation, data cleaning, label construction, feature engineering methodology, and model architectures for the Waypoint Group delivery analytics system.
+
+---
+
+## 1. Overview & Data Ingestion
+
+The solution ingests synthetic operational data from 9 core files across two depots (Peliyagoda and Kandy), serving 120 retail outlets with 60 vehicles across three brands (**Fresh**, **Style**, and **Tech**):
+
+- **Order Records:** `deliveries_train.csv` (97,321 historical orders) and `task1_test_inputs.csv` (5,014 test orders).
+- **Route Execution Legs:** `route_legs_train.csv` (96,908 legs) and `route_legs_test.csv` (5,014 planned legs).
+- **Network Reference:** `outlets.csv` (120 outlets), `vehicles.csv` (60 vehicles), `district_travel.csv` (12 districts), `service_allowance.csv` (9 brand/dock combinations).
+- **Operating Context:** `calendar.csv` (910 operating/calendar days), `traffic_speed.csv` (congestion by district and hour), `road_conditions.csv` (disruption index).
+
+### Data Ingestion and Unification Pipeline
+1. **Clock Time Conversion:** All timestamps ending in `_time` (formatted as `HH:MM`) are parsed into scalar integers representing minutes from midnight ($0 \le t < 1440$) using `xora.timeutils.hhmm_to_minutes`.
+2. **Order-to-Leg Linking:** Dispatched orders in `deliveries_train.csv` and `task1_test_inputs.csv` match exactly one leg in the route table where `(route_id, seq_in_route)` equals `(route_id, seq)`. Orders and route legs are combined into a unified analysis table (`stops.parquet`).
+3. **Partition Tracking:** A strict `split` column (`train` vs `test`) is maintained throughout the pipeline to prevent cross-contamination.
+
+---
+
+## 2. Data Quality and Cleaning
+
+The data cleaning pipeline (`notebooks/02_data_quality_and_cleaning.ipynb`) applies programmatic sanity checks across all tables:
+
+### Structural and Domain Rule Checks
+- **Primary Keys:** Confirmed 100% uniqueness of `delivery_id` in orders, `leg_id` in route legs, and `outlet_id` in outlets.
+- **Categorical Integrity:** Validated allowed values for brands (`Fresh`, `Style`, `Tech`), depots (`Peliyagoda`, `Kandy`), temperature requirement (`chilled`, `ambient`), and dispatch statuses (`attempted`, `deferred`, `not_run`).
+- **Operating Days:** Confirmed that day-of-week (`dow`) is strictly between 0 (Monday) and 5 (Saturday), as Waypoint does not operate Sunday deliveries.
+
+### Missing Values and Blank Handling
+- **Route Attributes for `not_run` Orders:** Out of 97,321 training orders, exactly 413 have `dispatch_status == 'not_run'`. These orders have null route and execution fields because they were never dispatched due to depot capacity shortages.
+  - *Treatment:* They are retained in the master order table to ensure full demand accounting for Task 2A (where every customer order represents genuine demand), but excluded from Task 1 route service and lateness modeling.
+- **Zero Inconsistencies:** No missing values exist in network reference tables or test inputs.
+
+### Cross-Table Referential Consistency
+- Confirmed that redundant outlet attributes present in order records (`brand`, `district`, `depot`, `window_open_time`, `window_close_time`) match `outlets.csv` with zero discrepancies.
+- Confirmed that vehicle attributes (`vehicle_type`, `vehicle_temp`) match `vehicles.csv`.
+
+---
+
+## 3. Label Construction
+
+Neither Task 1 target is supplied in the raw inputs. Both are derived from route execution records following the operational specifications in the Challenge Booklet (`notebooks/03_label_construction.ipynb`).
+
+### 3.1 Outlet Handling / Service Time (`pred_service_min`)
+- **Operational Requirement:** Outlets receive goods only during their scheduled delivery window (`window_open_time` to `window_close_time`). A vehicle arriving early must wait until the store opens. Time spent idling outside a closed outlet is gate waiting time, not handling time.
+- **Mathematical Formulation:**
+  $$\text{service\_start} = \max(\text{arrival\_time\_min}, \text{window\_open\_time\_min})$$
+  $$\text{service\_min} = \text{leave\_outlet\_time\_min} - \text{service\_start}$$
+  $$\text{wait\_min} = \text{service\_start} - \text{arrival\_time\_min}$$
+- **Verification:**
+  - If calculated simply as $\text{leave} - \text{arrival}$, first stops (which often arrive before store opening) would appear falsely prolonged by 15–45 minutes of idle waiting.
+  - The derived `service_min` accurately isolates handling: Fresh has a median handling time of ~15 minutes; Style medians are 30–61 minutes; Tech medians are 35–74 minutes depending on dock type (`rear_dock`, `street`, `mall_bay`).
+
+### 3.2 Lateness Probability (`pred_late_prob`)
+- **Operational Requirement:** Lateness refers strictly to arrival after the outlet's delivery window has closed. Late deliveries are still accepted and unloaded.
+- **Mathematical Formulation:**
+  $$\text{late} = \begin{cases} 1, & \text{if } \text{arrival\_time\_min} > \text{window\_close\_time\_min} \\ 0, & \text{otherwise} \end{cases}$$
+- **Boundary Handling:** Arriving exactly at `window_close_time_min` is classified as on-time ($0$).
+- **Distribution:** Across training routes, ~20.9% of deliveries arrive late, heavily concentrated on Fresh pre-dawn routes where tight 8:00 AM cutoffs interact with road congestion.
+
+### 3.3 Weekly Depot Demand Construction (Task 2A)
+- **Aggregation Rules:**
+  1. Every order is counted once, including deferred orders and `not_run` orders, as all represent customer demand.
+  2. Orders are assigned to the week corresponding to their **requested `order_date`**, rather than actual dispatch date.
+  3. Grouping uses `iso_year` and `iso_week` from `calendar.csv`.
+- **Gap Adjustment:** The gap between the training set (ending 2026 week 7) and test forecast horizon (weeks 14 to 23) is bridged using `task1_test_inputs.csv` (weeks 8 to 13), adjusted for the small historical proportion of undispatched orders (`not_run_uplift`).
+- **Chilled Isolation:** Chilled demand is strictly zeroed for Style and Tech (`pred_chilled_volume_m3 = 0.0`), as only Fresh handles refrigerated goods.
+
+---
+
+## 4. Feature Engineering & 4:00 PM Cutoff Audit
+
+All features used for Task 1 modeling are strictly constrained to information known to the dispatcher at the **4:00 PM cutoff** before the delivery day (`notebooks/04_feature_engineering.ipynb` and `reports/feature_audit.csv`).
+
+A total of **61 leak-free features** were engineered across five categories:
+
+| Feature Group | Count | Key Features | Operational Rationale |
+|---|---|---|---|
+| **Order & Vehicle** | 19 | `order_units`, `order_weight_kg`, `order_volume_m3`, `kg_per_unit`, `is_chilled`, `is_mall`, `was_deferred`, `vehicle_volume_cap_m3`, `vehicle_weight_cap_kg`, `allowance_min`, vehicle & dock types | Captures physical handling burden, dock accessibility, vehicle capacity utilization, and baseline standard allowance. |
+| **Route Position & Sequence** | 17 | `seq`, `is_first_stop`, `route_n_stops`, `stops_after`, `same_outlet_as_previous`, `route_volume_m3`, `route_weight_kg`, `volume_before_m3`, `route_distance_km`, `distance_so_far_km`, `leg_distance_km`, `planned_travel_min`, `planned_travel_so_far_min`, `route_start_min`, `planned_arrival_min`, `planned_hour`, `minutes_into_route` | Models where the delivery sits in the run. Delays accumulate along the route; early stops affect downstream punctuality. |
+| **Buffer & Slack Dynamics** | 4 | `window_length_min`, `planned_slack_min` (`window_close - planned_arrival`), `planned_early_min` (`window_open - planned_arrival`), `min_slack_ahead_min` | Quantifies the margin of error before a scheduled stop breaches the deadline. |
+| **Calendar & Environmental** | 11 | `dow`, `month`, `is_payday`, `is_holiday`, `monsoon`, `festival_ramp`, `is_festival_day`, `days_to_festival`, `trend_days`, `disruption_index`, `speed_index` | Captures external friction: monsoon rains, roadworks, festival traffic surges, and payday shopping spikes. |
+| **Historical Priors (Causal)** | 10 | `group_hist_service_mean`, `outlet_hist_stops`, `outlet_hist_service_mean`, `outlet_hist_late_rate`, `district_hist_travel_ratio`, `vehicle_hist_depart_delay`, `load_share_volume`, `load_share_weight`, `expected_travel_min`, `slack_after_history_min` | Historical moving statistics computed strictly on dates preceding the prediction target date. |
+
+### Leakage Audit
+- Verified that no execution-time columns (`actual_depart_time_min`, `actual_travel_duration_min`, `arrival_time_min`, `leave_outlet_time_min`) or downstream leg information are accessible to the model features.
+- All historical priors are strictly computed using expanding/rolling windows up to $t-1$.
+
+---
+
+## 5. Model Cards
+
+All production models are serialized in `models/` alongside configuration metadata in `models/manifest.json`.
+
+### Model 1: Task 1 Service Time Regressor
+- **Architecture:** LightGBM Gradient Boosted Regressor (`models/route_simulator.pkl` regression component).
+- **Objective:** Mean Absolute Error minimization (`L1` objective).
+- **Inputs:** 61 cutoff-time features.
+- **Holdout Performance:**
+  - **MAE:** **3.92 minutes** (compared to the baseline published allowance table MAE of **7.09 minutes** — a **45% error reduction**).
+  - **RMSE:** 6.30 minutes.
+  - **Mean Bias:** +0.23 minutes (unbiased).
+
+### Model 2: Task 1 Arrival Lateness Predictor
+- **Architecture:** 50/50 Ensemble of:
+  1. **Route Simulator (Monte Carlo Engine):** 1,000 stochastic route-level replays sampling travel time ratios, handling variations, and depot departure delays to capture non-linear cascading lateness across stops.
+  2. **Direct Classifier:** LightGBM Binary Classifier trained with binary cross-entropy on stop features (`models/late_classifier.pkl`).
+- **Holdout Performance:**
+  - **ROC-AUC:** **0.9745** (substantially outperforming paper slack baseline AUC of 0.86).
+  - **Log Loss:** **0.1360** (vs baseline 0.287).
+  - **Brier Score:** **0.0415** (strictly calibrated probabilities).
+
+### Model 3: Task 2A Weekly Depot Demand Forecaster
+- **Architecture:** Daily forecasting aggregated into ISO calendar weeks:
+  1. **Harmonic Calendar Regressor:** Linear Ridge/ElasticNet with Fourier seasonal harmonics and holiday step indicators (`models/demand_regression.pkl`).
+  2. **Calendar LightGBM Regressor:** Non-linear tree model with festival proximity ramp features (`models/demand_calendar_gbm.pkl`).
+- **Methodology:** Daily volume is predicted per depot and brand, then summed by `iso_year` and `iso_week` to ensure moveable holidays (such as Vesak moving between ISO weeks 18, 20, and 21) are placed accurately without artificial week-matching errors.
+- **Backtest Validation (6 Rolling Origins across 2025–2026):**
+  - **Total Volume WAPE:** **5.16%** (**41% lower error** than same-week-last-year baseline of 12.6%).
+  - **Chilled Volume WAPE:** **3.62%** (**54% lower error** than last year's baseline of 7.8%).
+  - **P10–P90 Prediction Interval Coverage:** 76.5% on leave-one-out testing.
+
+### Model 4: Task 2B Peak-Day Fleet Allocator
+- **Architecture:** Mixed-Integer Linear Program (MILP) formulated in PuLP and solved via CBC (`src/xora/allocation.py`).
+- **Algorithm:** Strict lexicographic multi-objective optimization across 6 locked priority tiers:
+  1. Priority 1: Serve 100% of orders deferred on previous runs.
+  2. Priority 2: Maximize chilled volume served (allowing $\le 1\%$ trade-off to maximize number of distinct outlets reached).
+  3. Priority 3: Maximize Fresh ambient volume (shelves stocked before 8:00 AM).
+  4. Priority 4: Maximize total delivered volume across Style and Tech.
+  5. Priority 5: Minimize high-risk second pre-dawn trips.
+  6. Priority 6: Minimize total fleet kilometers.
+- **Result:** Serves 76 of 85 orders (320.2 of 409.9 $\text{m}^3$), 100% repeat deferrals, 18 of 26 chilled outlets (132.6 $\text{m}^3$), fully validated by `check_allocation.py`.
