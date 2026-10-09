@@ -73,21 +73,22 @@ Neither Task 1 target is supplied in the raw inputs. Both are derived from route
 
 ## 4. Feature Engineering & 4:00 PM Cutoff Audit
 
-All features used for Task 1 modeling are strictly constrained to information known to the dispatcher at the **4:00 PM cutoff** before the delivery day (`notebooks/04_feature_engineering.ipynb` and `reports/feature_audit.csv`).
+All features used for Task 1 modeling are verified against `reports/feature_audit.csv` and aligned with the operational boundary at the **4:00 PM cutoff** before the delivery day (`notebooks/04_feature_engineering.ipynb`).
 
-A total of **61 leak-free features** were engineered across five categories:
+A total of **61 features** are constructed, grouped identically to `reports/feature_audit.csv`:
 
-| Feature Group | Count | Key Features | Operational Rationale |
-|---|---|---|---|
-| **Order & Vehicle** | 19 | `order_units`, `order_weight_kg`, `order_volume_m3`, `kg_per_unit`, `is_chilled`, `is_mall`, `was_deferred`, `vehicle_volume_cap_m3`, `vehicle_weight_cap_kg`, `allowance_min`, vehicle & dock types | Captures physical handling burden, dock accessibility, vehicle capacity utilization, and baseline standard allowance. |
-| **Route Position & Sequence** | 17 | `seq`, `is_first_stop`, `route_n_stops`, `stops_after`, `same_outlet_as_previous`, `route_volume_m3`, `route_weight_kg`, `volume_before_m3`, `route_distance_km`, `distance_so_far_km`, `leg_distance_km`, `planned_travel_min`, `planned_travel_so_far_min`, `route_start_min`, `planned_arrival_min`, `planned_hour`, `minutes_into_route` | Models where the delivery sits in the run. Delays accumulate along the route; early stops affect downstream punctuality. |
-| **Buffer & Slack Dynamics** | 4 | `window_length_min`, `planned_slack_min` (`window_close - planned_arrival`), `planned_early_min` (`window_open - planned_arrival`), `min_slack_ahead_min` | Quantifies the margin of error before a scheduled stop breaches the deadline. |
-| **Calendar & Environmental** | 11 | `dow`, `month`, `is_payday`, `is_holiday`, `monsoon`, `festival_ramp`, `is_festival_day`, `days_to_festival`, `trend_days`, `disruption_index`, `speed_index` | Captures external friction: monsoon rains, roadworks, festival traffic surges, and payday shopping spikes. |
-| **Historical Priors (Causal)** | 10 | `group_hist_service_mean`, `outlet_hist_stops`, `outlet_hist_service_mean`, `outlet_hist_late_rate`, `district_hist_travel_ratio`, `vehicle_hist_depart_delay`, `load_share_volume`, `load_share_weight`, `expected_travel_min`, `slack_after_history_min` | Historical moving statistics computed strictly on dates preceding the prediction target date. |
+| Feature Group | Count | Key Features | Operational Rationale | Cutoff Status |
+|---|---|---|---|---|
+| **Route position** | 21 | `seq`, `is_first_stop`, `route_n_stops`, `stops_after`, `same_outlet_as_previous`, `route_volume_m3`, `route_weight_kg`, `volume_before_m3`, `route_distance_km`, `distance_so_far_km`, `leg_distance_km`, `planned_travel_min`, `planned_travel_so_far_min`, `route_start_min`, `planned_arrival_min`, `planned_hour`, `minutes_into_route`, `window_length_min`, `planned_slack_min`, `planned_early_min`, `min_slack_ahead_min` | Encodes sequence in the drafted route, cumulative drive times, and forward buffer margins. | Available at 4 PM (from drafted route legs) |
+| **Order and vehicle** | 19 | `brand`, `depot`, `district`, `temp_requirement`, `dock_type`, `parking_constraint`, `vehicle_type`, `vehicle_temp`, `outlet_id`, `order_units`, `order_weight_kg`, `order_volume_m3`, `kg_per_unit`, `is_chilled`, `is_mall`, `was_deferred`, `vehicle_volume_cap_m3`, `vehicle_weight_cap_kg`, `allowance_min` | Physical characteristics of the delivery, dock access constraints, vehicle capacity, and standard allowance. | Available at 4 PM (confirmed order + plan) |
+| **Calendar** | 9 | `dow`, `month`, `is_payday`, `is_holiday`, `monsoon`, `festival_ramp`, `is_festival_day`, `days_to_festival`, `trend_days` | Day of week, seasonal shifts, monsoon indicators, and holiday / payday shopping surges. | Available at 4 PM (known calendar) |
+| **History** | 6 | `group_hist_service_mean`, `outlet_hist_stops`, `outlet_hist_service_mean`, `outlet_hist_late_rate`, `district_hist_travel_ratio`, `vehicle_hist_depart_delay` | Historical performance priors computed strictly on dates preceding the delivery day ($t-1$). | Available at 4 PM (prior route logs) |
+| **Plan combined with history** | 4 | `load_share_volume`, `load_share_weight`, `expected_travel_min`, `slack_after_history_min` | Blends planned metrics with historical driver and district speed ratios. | Available at 4 PM (computed before dispatch) |
+| **Road and traffic** | 2 | `disruption_index`, `speed_index` | Hourly district congestion index and road disruption advisory index. | See advisory note below |
 
-### Leakage Audit
-- Verified that no execution-time columns (`actual_depart_time_min`, `actual_travel_duration_min`, `arrival_time_min`, `leave_outlet_time_min`) or downstream leg information are accessible to the model features.
-- All historical priors are strictly computed using expanding/rolling windows up to $t-1$.
+### 4:00 PM Cutoff and Road Advisory Audit
+- **Strictly Known Features (60 / 61):** 60 features are strictly known when the planner drafts the next day's run sheets at 4:00 PM. No downstream execution timestamps (`actual_depart_time_min`, `actual_travel_duration_min`, `arrival_time_min`, `leave_outlet_time_min`) leak into any feature.
+- **Borderline Feature (`disruption_index`):** As documented in `reports/feature_audit.csv`, `disruption_index` is classified as **borderline** because in production it represents a published road advisory / disruption notice available ahead of the run. Models were trained and validated both with and without this feature; because it improves late risk calibration without introducing post-event leakage, `manifest.json` confirms `road_advisory_used: true`.
 
 ---
 
