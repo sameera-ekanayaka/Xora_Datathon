@@ -18,7 +18,7 @@ Waypoint Group runs 60 vehicles from two depots to 120 outlets across three reta
 | **Task 1.** How long will each delivery take? | published allowance table, off by 7.1 min a stop | LightGBM on cutoff-time features | **3.9 min** error a stop, **45% less** |
 | **Task 1.** Will the truck arrive after the window closes? | slack on paper (log loss 0.287, AUC 0.86) | 1,000 replays of every route, blended with a direct classifier | **log loss 0.136, AUC 0.97**, calibrated |
 | **Task 2A.** How much volume in the next 10 weeks? | same week last year | daily festival-aware models added up into ISO weeks | **5.2% error** on total, **3.6%** on chilled; **41 to 54% less error** than last year's pattern |
-| **Task 2B.** Who gets served on a peak day? | dispatcher judgement | optimiser with a fixed, agreed order of priorities | **76 of 85 orders**, every repeat deferral served, chilled volume **within 0.2% of the proven maximum**, passes Waypoint's checker |
+| **Task 2B.** Who gets served on a peak day? | dispatcher judgement | optimiser with a fixed, agreed order of priorities | **76 of 85 orders**, all 10 previous-run deferrals served (two-day service is not guaranteed; 4 deferred orders have 2 days and S1-078 requires splitting), chilled volume **within 0.2% of the proven maximum**, passes Waypoint's checker |
 | **People.** What should each person do? | probabilities nobody reads | traffic lights, clock times and one-line reasons | the red stops are **21% of stops** but carry **over 80%** of expected late arrivals |
 
 ## Deliverables checklist
