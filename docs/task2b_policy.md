@@ -8,7 +8,7 @@ One brand and one district per trip. Whole orders only. Chilled goods only on re
 
 ## Priorities, in this order
 
-1. **No outlet waits two days in a row.** Orders deferred yesterday ride first.
+1. **Orders skipped on the previous run ride first.** `deferred_yesterday = 1` means the outlet was skipped on the previous run. This is different from `days_since_last_served`, which counts days since the outlet last got a delivery. In S1 all 10 such orders are served.
 2. **Chilled goods.** They spoil and only reefers can carry them. We may give up at most 1% of the best chilled volume if that gets chilled goods to more stores.
 3. **Fresh ambient.** Fresh shelves must be stocked before 8 AM.
 4. **Total volume.** Style and Tech can absorb a day's wait more easily than Fresh.
@@ -36,20 +36,20 @@ Per the booklet standard ($\text{trip minutes} = \text{outbound} + \text{inter-s
 ## Unavoidable and elective deferrals
 
 Comparing the scenario files against `task2b_peak_day_fleet.csv` and `vehicles.csv`, Peliyagoda has **ten vehicles in the workshop** (5 ambient trucks, 4 reefer trucks, 1 reefer van; 28 available).
-- **Unavoidable:** S1-078 (Style, OUT070, 40.7 m³) is bigger than the largest truck (38 m³). The commercial fix is to split the order.
-- **Capacity-forced:** With **four of seven reefer trucks** in the workshop (plus one reefer van), over 55% of refrigerated capacity is offline. Only 4 reefers are available (86.2 m³ single-trip capacity). No valid plan can serve more than 132.8 m³ of the 181.6 m³ chilled demand; about 49 m³ must wait. The optimiser proves this.
-- **Elective:** Which chilled orders wait is a choice. We serve 132.6 m³ to 18 stores instead of 132.8 m³ to 17 stores, giving up 0.2 m³ to reach an extra store. Each deferred order carries a price: what serving it instead would cost other stores (see Appendix B).
+- **Unavoidable:** S1-078 (Style, OUT070, 40.66 m³) is bigger than the largest truck (38 m³). The commercial fix is to split the order.
+- **Capacity-forced:** With **four of seven reefer trucks** in the workshop (plus one reefer van), over 55% of refrigerated capacity is offline. Only 4 reefers are available (86.2 m³ single-trip capacity). No valid plan can serve more than 132.833 m³ of the 181.6 m³ chilled demand; about 49 m³ must wait. The optimiser proves this.
+- **Elective:** Which chilled orders wait is a choice. We serve **132.586 m³** to 18 stores instead of the strict 132.833 m³ to 17 stores, giving up **0.247 m³** to reach an extra store. Each deferred order carries a shadow price (see Appendix B).
 
 ## Result for S1
 
-76 of 85 orders (320 of 410 m³) ride on 24 trips. All ten repeat deferrals ride. All Fresh ambient and all Style and Tech orders that fit a truck ride. Chilled: 132.6 m³ to 18 of 26 stores. The plan passes Waypoint's allocation checker.
+76 of 85 orders (320 of 410 m³) ride on 24 trips. All ten repeat deferrals ride. All Fresh ambient and all Style and Tech orders that fit a truck ride. Chilled: 132.586 m³ to 18 of 26 stores. The plan passes Waypoint's allocation checker.
 
 ## Cost and impact trade-offs
 
-- **Stores vs volume:** Sacrificing 0.25 m³ chilled volume reaches one more store.
+- **Stores vs volume:** Sacrificing 0.247 m³ chilled volume reaches one more store.
 - **Clock replay:** Accounting for depot reloads and store opening times, 5 chilled stops on second trips arrive after opening. Stores receive early warnings, and drivers receive clock schedules.
 - **Workshop priority:** Releasing one large reefer truck recovers ~35 m³ and 5 stores; the reefer van recovers 10 m³ and unlocks van-only chilled stores.
-- **Tomorrow:** Every deferred order becomes Priority 1 tomorrow, preventing consecutive misses.
+- **Tomorrow:** Every order deferred today becomes Priority 1 tomorrow. This stops repeat skipping when capacity allows. It cannot help S1-078 until the order is split, and chilled orders may wait again if reefers are still short.
 
 ---
 
@@ -65,7 +65,7 @@ Comparing the scenario files against `task2b_peak_day_fleet.csv` and `vehicles.c
 | **Reefer Van** | 2 | 1 (VEH036) | 1 (VEH035) | 50.0% | 7.0 m³ |
 | **Total** | **38** | **28** | **10** | **26.3%** | **759.2 m³** |
 
-*Demand context:* Ambient demand is 228.2 m³ (easily served by 673 m³ ambient capacity). Chilled demand is 181.6 m³, exceeding the 86.2 m³ single-trip reefer capacity and bounded by the 270-minute pre-dawn limit to 132.8 m³ maximum throughput.
+*Demand context:* Ambient demand is 228.2 m³ (easily served by 673 m³ ambient capacity). Chilled demand is 181.6 m³, exceeding the 86.2 m³ single-trip reefer capacity and bounded by the 270-minute pre-dawn limit to 132.833 m³ maximum throughput.
 
 ### Appendix B: Deferral Reasons and Shadow Prices
 

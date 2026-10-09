@@ -89,6 +89,7 @@ A total of **61 features** are constructed, grouped identically to `reports/feat
 ### 4:00 PM Cutoff and Road Advisory Audit
 - **Strictly Known Features (60 / 61):** 60 features are strictly known when the planner drafts the next day's run sheets at 4:00 PM. No downstream execution timestamps (`actual_depart_time_min`, `actual_travel_duration_min`, `arrival_time_min`, `leave_outlet_time_min`) leak into any feature.
 - **Borderline Feature (`disruption_index`):** As documented in `reports/feature_audit.csv`, `disruption_index` is classified as **borderline** because in production it represents a published road advisory / disruption notice available ahead of the run. Models were trained and validated both with and without this feature; because it improves late risk calibration without introducing post-event leakage, `manifest.json` confirms `road_advisory_used: true`.
+- **Deployment Dependency and Fallback:** The final late-risk models use `disruption_index`, a published road advisory. It must reach the planner by 4 PM. If it is missing, use the no-advisory fallback: holdout log loss 0.174, AUC 0.957, service MAE 3.98, against 0.136, 0.974, and 3.92 with it. The fallback models can be retrained directly from notebook cell 154 (`notebooks/05_task1_service_and_lateness.ipynb` and `Xora_FinalNotebook.ipynb`).
 
 ---
 
@@ -122,7 +123,7 @@ All production models are serialized in `models/` alongside configuration metada
 - **Backtest Validation (6 Rolling Origins across 2025–2026):**
   - **Total Volume WAPE:** **5.16%** (**41% lower error** than a baseline of about 8.7% based on same week last year; ratio vs last year is 0.591).
   - **Chilled Volume WAPE:** **3.62%** (**54% lower error** than last year's baseline of 7.8%; ratio vs last year is 0.463).
-  - **P10–P90 Prediction Interval Coverage:** 76.5% on leave-one-out testing.
+  - **Prediction Interval Coverage:** The P10 to P90 band covers about 76% of held-out weeks (target 80%), so it is slightly narrow. We did not recalibrate it.
 
 ### Model 4: Task 2B Peak-Day Fleet Allocator
 - **Architecture:** Mixed-Integer Linear Program (MILP) formulated in PuLP and solved via CBC (`src/xora/allocation.py`).
@@ -133,4 +134,4 @@ All production models are serialized in `models/` alongside configuration metada
   4. Priority 4: Maximize total delivered volume across Style and Tech.
   5. Priority 5: Minimize high-risk second pre-dawn trips.
   6. Priority 6: Minimize total fleet kilometers.
-- **Result:** Serves 76 of 85 orders (320.2 of 409.9 $\text{m}^3$), 100% repeat deferrals, 18 of 26 chilled outlets (132.6 $\text{m}^3$), fully validated by `check_allocation.py`.
+- **Result:** Serves 76 of 85 orders (320.161 of 409.866 $\text{m}^3$), 100% repeat deferrals, 18 of 26 chilled outlets (132.586 $\text{m}^3$ vs proven strict maximum of 132.833 $\text{m}^3$), fully validated by `check_allocation.py`.
