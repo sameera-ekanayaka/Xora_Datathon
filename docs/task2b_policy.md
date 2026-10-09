@@ -42,7 +42,7 @@ Comparing the scenario files against `task2b_peak_day_fleet.csv` and `vehicles.c
 
 ## Result for S1
 
-76 of 85 orders (320 of 410 m³) ride on 24 trips. All ten repeat deferrals ride. All Fresh ambient and all Style and Tech orders that fit a truck ride. Chilled: 132.586 m³ to 18 of 26 stores. The plan passes Waypoint's allocation checker.
+76 of 85 orders (320 of 410 m³) ride on 24 trips. All 10 orders skipped on the previous run are served. This does not mean every outlet is served within two days. Four deferred orders (S1-056, S1-075, S1-005, S1-078) already have 2 days since last served, and S1-078 cannot be served until the order is split. All Fresh ambient and all Style and Tech orders that fit a truck ride. Chilled: 132.586 m³ to 18 of 26 stores. The plan passes Waypoint's allocation checker.
 
 ## Cost and impact trade-offs
 

@@ -113,7 +113,7 @@ All production models are serialized in `models/` alongside configuration metada
 - **Holdout Performance:**
   - **ROC-AUC:** **0.9745** (substantially outperforming paper slack baseline AUC of 0.86).
   - **Log Loss:** **0.1360** (vs baseline 0.287).
-  - **Brier Score:** **0.0415** (strictly calibrated probabilities).
+  - **Brier Score:** **0.0415**, a measure of probability error. Calibration is checked separately with a holdout reliability plot and predicted-against-observed late share by stop position (notebook sections 6.6 and 6.8). Predictions track observed rates closely, with small over-prediction at some stop positions.
 
 ### Model 3: Task 2A Weekly Depot Demand Forecaster
 - **Architecture:** Daily forecasting aggregated into ISO calendar weeks:
@@ -134,4 +134,4 @@ All production models are serialized in `models/` alongside configuration metada
   4. Priority 4: Maximize total delivered volume across Style and Tech.
   5. Priority 5: Minimize high-risk second pre-dawn trips.
   6. Priority 6: Minimize total fleet kilometers.
-- **Result:** Serves 76 of 85 orders (320.161 of 409.866 $\text{m}^3$), 100% repeat deferrals, 18 of 26 chilled outlets (132.586 $\text{m}^3$ vs proven strict maximum of 132.833 $\text{m}^3$), fully validated by `check_allocation.py`.
+- **Result:** Serves 76 of 85 orders (320.161 of 409.866 $\text{m}^3$), all 10 orders with `deferred_yesterday == 1` served (this does not guarantee two-day service for all outlets, as 4 deferred orders have 2 days since last served and S1-078 requires splitting), 18 of 26 chilled outlets (132.586 $\text{m}^3$ vs proven strict maximum of 132.833 $\text{m}^3$), fully validated by `check_allocation.py`.
